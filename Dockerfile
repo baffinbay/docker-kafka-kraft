@@ -1,8 +1,8 @@
-FROM eclipse-temurin:8u402-b06-jre-alpine
+FROM eclipse-temurin:21-alpine
 
 WORKDIR /opt
 
-ARG kafkaversion=3.6.1
+ARG kafkaversion=3.9.0
 ARG scalaversion=2.13
 
 ENV KRAFT_CONTAINER_HOST_NAME=
