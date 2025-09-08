@@ -1,8 +1,8 @@
-FROM eclipse-temurin:21-alpine
+FROM eclipse-temurin:24-alpine
 
 WORKDIR /opt
 
-ARG kafkaversion=3.9.1
+ARG kafkaversion=4.0.0
 ARG scalaversion=2.13
 
 ENV KRAFT_CONTAINER_HOST_NAME=
@@ -19,7 +19,9 @@ RUN curl -o kafka.tgz https://mirrors.ocf.berkeley.edu/apache/kafka/${kafkaversi
 
 WORKDIR /opt/kafka
 
+RUN mkdir -p ./config/kraft
 COPY ./configs/server.properties ./config/kraft
+
 COPY ./*.sh .
 
 EXPOSE 9092 9093
