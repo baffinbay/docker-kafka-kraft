@@ -19,7 +19,9 @@ RUN curl -o kafka.tgz https://mirrors.ocf.berkeley.edu/apache/kafka/${kafkaversi
 
 WORKDIR /opt/kafka
 
+RUN mkdir -p ./config/kraft
 COPY ./configs/server.properties ./config/kraft
+
 COPY ./*.sh .
 
 EXPOSE 9092 9093
