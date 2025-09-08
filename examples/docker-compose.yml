@@ -1,6 +1,6 @@
 services:
   kafka:
-    image: ghcr.io/baffinbay/docker-kafka-kraft:latest
+    image: ghcr.io/baffinbay/docker-kafka-kraft:main-28
     restart: always
     ports:
       - "9093:9093"
