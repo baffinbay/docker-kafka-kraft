@@ -31,6 +31,25 @@ else
     echo "inter.broker.listener.name=EXTERNAL" >> $properties_file;
     echo "listener.security.protocol.map=CONTROLLER:PLAINTEXT,INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT" >> $properties_file;
 fi
+
+if [ -z "$KRAFT_EXTRA_CONFIG" ]; then
+    echo "==> No extra broker config requested (environment variable not set).";
+else
+    echo "==> Applying extra broker config...";
+    # Accepts newline and/or semicolon separated "key=value" pairs. Appended
+    # last, so these take precedence over anything set above (Kafka reads the
+    # properties file with "last occurrence wins").
+    echo "$KRAFT_EXTRA_CONFIG" | tr ';' '\n' | while IFS= read -r entry; do
+        entry="$(echo "$entry" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')";
+        if [ -z "$entry" ]; then
+            continue;
+        fi
+        echo "==>     ${entry}";
+        echo "$entry" >> $properties_file;
+    done
+    echo "==> ✅ Extra broker config applied.";
+fi
+
 echo "==> ✅ Environment variables applied.";
 
 
